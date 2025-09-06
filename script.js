@@ -110,7 +110,7 @@ const showNewsByCategory = (articles) => {
             <p class="text-sm text-gray-400">${article.time}</p>
                 <div class="flex flex-col items-center gap-1 mt-3">
                  <button class="btn whitespace-nowrap">Bookmark</button>
-                   <button class="btn whitespace-nowrap">View Details</button>
+              <label for="my_modal_7" class="btn whitespace-nowrap">View Details</label>
                 </div>
             </div>
         </div>
@@ -134,7 +134,7 @@ newsContainer.addEventListener("click", (e) => {
   }
 
   if (e.target.innerText === "View Details") {
-    // handleViewDetails(e)
+    handleViewDetails(e)
   }
 });
 const handleBookmarks = (e) => {
@@ -177,8 +177,6 @@ const handleDeleteBookmark = (bookmarkId) => {
 } 
 
 
-
-
 const showLoading = () => {
     newsContainer.innerHTML = `
             <div class="rounded-xl bg-slate-200 h-[80vh] p-3 col-span-3 text-5xl">
@@ -192,7 +190,6 @@ const showLoading = () => {
 }
 
 
-
 const showError = () => {
     newsContainer.innerHTML = `
             <div class="rounded-xl bg-slate-200 h-[80vh] p-3 col-span-3 text-5xl">
@@ -204,7 +201,6 @@ const showError = () => {
         </div>
     `
 }
-
 
 
 const showEmptyMessage = () => {
@@ -221,9 +217,38 @@ const showEmptyMessage = () => {
 
 
 
+      
+const handleViewDetails = (e) =>{
+  const id = (e.target.parentNode.parentNode.id);
+  console.log(id);
+
+
+  fetch(`https://news-api-fs.vercel.app/api/news/${id}`)
+  .then(res =>res.json())
+  .then(data =>{
+    modalDetails(data.article);
+  })
 
 
 
 
+
+
+}
+
+
+const modalDetails = (Details) =>{
+
+  console.log(Details);
+      document.getElementById('modalDetails').innerHTML = `
+            <h1 class="text-xl font-bold mb-2" >${Details.title}</h1>
+            <img class ="rounded-lg" src="${Details.images[0].url}"/>
+            <p>${Details.content.join("")}</p>
+    `
+    
+
+
+
+}
 
 
