@@ -7,6 +7,8 @@ const modalContainer = document.getElementById('modalContainer')
 
 // 1) loading catagorys
 const loadCatagory = () => {
+
+
   fetch("https://news-api-fs.vercel.app/api/categories")
     .then((res) => res.json())
     .then((data) => {
@@ -58,7 +60,7 @@ categoryContainer.addEventListener("click", (e) => {
 
   if (e.target.localName === "li") {
     //   console.log(e.target.id);
-    // showLoading()
+    showLoading()
     e.target.classList.add("border-b-4");
     loadNewsByCategory(e.target.id);
   }
@@ -68,6 +70,9 @@ categoryContainer.addEventListener("click", (e) => {
 // 4) loading news by category
 const loadNewsByCategory = (categoryId) => {
   //   console.log(categoryId);
+
+
+
   fetch(`https://news-api-fs.vercel.app/api/categories/${categoryId}`)
     .then((res) => res.json())
     .then((data) => {
@@ -75,7 +80,7 @@ const loadNewsByCategory = (categoryId) => {
       showNewsByCategory(data.articles);
     })
     .catch((err) => {
-      //  showError()
+       showError()
     });
 };
 
@@ -86,10 +91,13 @@ const showNewsByCategory = (articles) => {
   // console.log(articles[0].image.srcset[5].url);
 
     if(articles.length === 0) {
-        // showEmptyMessage()
+        showEmptyMessage()
         // alert('No news found for this category!')
        return 
     }
+
+
+
   newsContainer.innerHTML = "";
   articles.forEach((article) => {
     newsContainer.innerHTML += `
@@ -167,6 +175,52 @@ const handleDeleteBookmark = (bookmarkId) => {
    showBookmarks(bookmarks)
 
 } 
+
+
+
+
+const showLoading = () => {
+    newsContainer.innerHTML = `
+            <div class="rounded-xl bg-slate-200 h-[80vh] p-3 col-span-3 text-5xl">
+          <h1
+            class="w-full h-full flex justify-center items-center font-semibold font-serif"
+          >
+            Loading...
+          </h1>
+        </div>
+    `
+}
+
+
+
+const showError = () => {
+    newsContainer.innerHTML = `
+            <div class="rounded-xl bg-slate-200 h-[80vh] p-3 col-span-3 text-5xl">
+          <h1
+            class="w-full h-full flex justify-center items-center font-semibold font-serif"
+          >
+            Error...
+          </h1>
+        </div>
+    `
+}
+
+
+
+const showEmptyMessage = () => {
+    newsContainer.innerHTML = `
+            <div class="rounded-xl bg-slate-200 h-[80vh] p-3 col-span-3 text-5xl">
+          <h1
+            class="w-full h-full flex justify-center items-center font-semibold font-serif"
+          >
+            No news found...
+          </h1>
+        </div>
+    `
+}
+
+
+
 
 
 
