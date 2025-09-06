@@ -116,6 +116,8 @@ loadNewsByCategory('main')// to get main category loaded by deafult
 
 
 
+ let bookmarks = []
+
 newsContainer.addEventListener("click", (e) => {
   // console.log(e.target)
   // console.log(e.target.innerText)
@@ -127,12 +129,11 @@ newsContainer.addEventListener("click", (e) => {
     // handleViewDetails(e)
   }
 });
-
- const bookmarks = []
-
 const handleBookmarks = (e) => {
-  const title = e.target.parentNode.children[0].innerText;
-  const id = e.target.parentNode.id;
+  const title = e.target.parentNode.parentNode.children[0].innerText;
+  // console.log(title);
+  const id = e.target.parentNode.parentNode.id;
+  // console.log(id);
 
   bookmarks.push({
     title: title,
@@ -147,6 +148,7 @@ const showBookmarks = (bookmarks) => {
     console.log(bookmarks)
     bookmarkContainer.innerHTML = ""
     bookmarks.forEach(bookmark => {
+      console.log(bookmark);
         bookmarkContainer.innerHTML += `
         <div class="border my-2 p-1">
             <h1>${bookmark.title}</h1>
@@ -157,6 +159,14 @@ const showBookmarks = (bookmarks) => {
 
     bookmarkCount.innerText = bookmarks.length
 };
+
+
+const handleDeleteBookmark = (bookmarkId) => {
+   const filteredBookmarks =  bookmarks.filter(bookmark => bookmark.id !== bookmarkId)
+   bookmarks = filteredBookmarks // Re-assigning bookmarks arry with filteredBookmrks
+   showBookmarks(bookmarks)
+
+} 
 
 
 
